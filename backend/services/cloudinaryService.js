@@ -14,9 +14,6 @@ export const uploadToCloudinary = (fileBuffer, folder = 'spendlens', resourceTyp
       {
         folder,
         resource_type: resourceType,
-        transformation: resourceType === 'image'
-          ? [{ quality: 'auto', fetch_format: 'auto' }]
-          : [],
       },
       (error, result) => {
         if (error) return reject(error);
