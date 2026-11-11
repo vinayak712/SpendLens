@@ -9,11 +9,13 @@ const sendTokenResponse = (user, statusCode, res) => {
     expiresIn: process.env.JWT_EXPIRE || '30d',
   });
 
+  const isProduction = process.env.NODE_ENV === 'production';
+
   const cookieOptions = {
     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: isProduction,          // HTTPS only in production
+    sameSite: isProduction ? 'none' : 'lax', // 'none' required for cross-origin (Render → Vercel)
   };
 
   res
